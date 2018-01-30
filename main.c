@@ -6,17 +6,50 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/01/30 13:32:05 by axbal            ###   ########.fr       */
+/*   Updated: 2018/01/30 14:03:58 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/fdf.h"
 
-void	draw(t_data *data)
+void	draw_circle(int x0, int y0, int radius, t_data *data)
 {
 	int		color;
+	int		x;
+	int		y;
+	int		d;
 
+	x = 0;
+	y = radius;
+	d = y - 1;
 	color = 0x0000FF;
+	while (y >= x)
+	{
+		mlx_pixel_put(MLX, WIN, x0 + x, y0 + y, color);
+		mlx_pixel_put(MLX, WIN, x0 + y, y0 + x, color);
+		mlx_pixel_put(MLX, WIN, x0 - x, y0 + y, color);
+		mlx_pixel_put(MLX, WIN, x0 - y, y0 + x, color);
+		mlx_pixel_put(MLX, WIN, x0 + x, y0 - y, color);
+		mlx_pixel_put(MLX, WIN, x0 + y, y0 - x, color);
+		mlx_pixel_put(MLX, WIN, x0 - x, y0 - y, color);
+		mlx_pixel_put(MLX, WIN, x0 - y, y0 - x, color);
+		if (d > 2 * x)
+		{
+			d -= 2 * x + 1;
+			x++;
+		}
+		else if (d < 2 * (radius - y))
+		{
+			d += 2 * y - 1;
+			y--;
+		}
+		else
+		{
+			d += 2 * (y - x - 1);
+			y--;
+			x++;
+		}
+	}
 }
 
 int		print_key(int key, void *param)
@@ -48,8 +81,8 @@ int		main(int argc, char **argv)
 	argv = 0;
 	data = global_init("test");
 	mlx_key_hook(WIN, print_key, (void *)0);
-//	draw(data);
-	draw_line(400, 250, 410, 100, data);
+	draw_circle(400, 250, 200, data);
+/*	draw_line(400, 250, 410, 100, data);
 	draw_line(400, 250, 450, 150, data);
 	draw_line(100, 250, 700, 250, data);
 	draw_line(400, 100, 400, 400, data);
@@ -61,7 +94,7 @@ int		main(int argc, char **argv)
 	draw_line(400, 250, 200, 100, data);
 	draw_line(400, 250, 150, 200, data);
 	draw_line(400, 250, 100, 270, data);
-	draw_line(400, 250, 300, 400, data);
+	draw_line(400, 250, 300, 400, data);*/
 	mlx_loop(MLX);
 	return (0);
 }
