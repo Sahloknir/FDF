@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/01/30 14:03:58 by axbal            ###   ########.fr       */
+/*   Updated: 2018/01/30 15:00:29 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int		main(int argc, char **argv)
 	argv = 0;
 	data = global_init("test");
 	mlx_key_hook(WIN, print_key, (void *)0);
-	draw_circle(400, 250, 200, data);
-/*	draw_line(400, 250, 410, 100, data);
+//	draw_circle(400, 250, 200, data);
+	draw_line(400, 250, 410, 100, data);
 	draw_line(400, 250, 450, 150, data);
 	draw_line(100, 250, 700, 250, data);
 	draw_line(400, 100, 400, 400, data);
@@ -94,7 +94,7 @@ int		main(int argc, char **argv)
 	draw_line(400, 250, 200, 100, data);
 	draw_line(400, 250, 150, 200, data);
 	draw_line(400, 250, 100, 270, data);
-	draw_line(400, 250, 300, 400, data);*/
+	draw_line(400, 250, 300, 400, data);
 	mlx_loop(MLX);
 	return (0);
 }
