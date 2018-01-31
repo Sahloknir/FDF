@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/01/30 15:00:29 by axbal            ###   ########.fr       */
+/*   Updated: 2018/01/31 14:12:22 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ int		print_key(int key, void *param)
 	return (0);
 }
 
-t_data	*global_init(char *name)
+t_data	*global_init(char *name, int fd)
 {
 	t_data	*data;
 
+	fd = 0;
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
 		return (NULL);
 	MLX = mlx_init();
@@ -75,26 +76,15 @@ t_data	*global_init(char *name)
 int		main(int argc, char **argv)
 {
 	t_data	*data;
+	int		fd;
 
-	if (argc < 1)
+	if (argc != 2)
 		return (0);
-	argv = 0;
-	data = global_init("test");
+	fd = open(argv[1], O_RDONLY);
+	data = global_init("fdf", fd);
 	mlx_key_hook(WIN, print_key, (void *)0);
 //	draw_circle(400, 250, 200, data);
-	draw_line(400, 250, 410, 100, data);
-	draw_line(400, 250, 450, 150, data);
-	draw_line(100, 250, 700, 250, data);
-	draw_line(400, 100, 400, 400, data);
-	draw_line(400, 250, 600, 200, data);
-	draw_line(400, 250, 700, 220, data);
-	draw_line(400, 250, 600, 270, data);
-	draw_line(400, 250, 450, 350, data);
-	draw_line(400, 250, 410, 400, data);
-	draw_line(400, 250, 200, 100, data);
-	draw_line(400, 250, 150, 200, data);
-	draw_line(400, 250, 100, 270, data);
-	draw_line(400, 250, 300, 400, data);
+//	draw_line(400, 250, 410, 100, data);
 	mlx_loop(MLX);
 	return (0);
 }

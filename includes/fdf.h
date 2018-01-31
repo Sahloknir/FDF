@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/01/30 12:18:20 by axbal            ###   ########.fr       */
+/*   Updated: 2018/01/31 14:03:25 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # include <stdlib.h>
+# include <fcntl.h>
 # include <stdio.h>
 
 # define WIN_HEIGHT 500

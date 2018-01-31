@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 15:48:16 by axbal             #+#    #+#             */
-/*   Updated: 2017/11/17 15:26:34 by axbal            ###   ########.fr       */
+/*   Updated: 2018/01/31 14:00:26 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int					ft_mul(int a, int b);
 int					ft_div(int a, int b);
 int					ft_mod(int a, int b);
 int					ft_doop(int a, int b, char c);
+int					get_next_line(int fd, char **line);
 
 #endif

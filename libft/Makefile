@@ -6,7 +6,7 @@
 #    By: axbal <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/09 16:21:56 by axbal             #+#    #+#              #
-#    Updated: 2017/11/17 15:30:17 by axbal            ###   ########.fr        #
+#    Updated: 2018/01/31 13:54:53 by axbal            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SRCS= ft_memset.c		\
 	  ft_div.c			\
 	  ft_mod.c			\
 	  ft_doop.c			\
+	  get_next_line.c	\
 
 SRCO=$(SRCS:.c=.o)
 
@@ -91,7 +92,7 @@ FLAGS= -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	cc -c $(FLAGS) $(SRCS)
+	cc -c $(FLAGS) -I./includes $(SRCS)
 	ar -rc $(NAME) $(SRCO)
 	ranlib $(NAME)
 

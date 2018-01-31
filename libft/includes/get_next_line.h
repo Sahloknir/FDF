@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/14 16:57:01 by axbal             #+#    #+#             */
-/*   Updated: 2017/11/14 17:02:28 by axbal            ###   ########.fr       */
+/*   Created: 2018/01/15 12:04:51 by axbal             #+#    #+#             */
+/*   Updated: 2018/01/31 13:56:48 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *))
-{
-	while (lst)
-	{
-		f(lst);
-		lst = lst->next;
-	}
-}
+# define BUFF_SIZE 2048
+
+# include <stdlib.h>
+# include <unistd.h>
+# include "../libft.h"
+
+int		get_next_line(const int fd, char **line);
+
+#endif
