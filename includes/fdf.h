@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/01/31 14:03:25 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/12 16:40:56 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,27 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-# define WIN_HEIGHT 500
-# define WIN_WIDTH 800
+# define WIN_HEIGHT 800
+# define WIN_WIDTH 1200
 # define MLX data->mlx_ptr
 # define WIN data->win_ptr
+
+# define GAP_Y 20
+# define GAP_X 25
+# define COEF 3
 
 typedef struct		s_data
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
+	int				**dots;
+	int				size_x;
+	int				size_y;
 }					t_data;
 
 void	draw_line(int x1, int y1, int x2, int y2, t_data *data);
+void	read_dots(int fd, t_data *data);
+int		ft_error(int error);
+void	gen_map(t_data *data);
 
 #endif

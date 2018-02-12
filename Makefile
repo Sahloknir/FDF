@@ -6,16 +6,20 @@
 #    By: axbal <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 14:54:13 by axbal             #+#    #+#              #
-#    Updated: 2018/01/30 12:16:15 by axbal            ###   ########.fr        #
+#    Updated: 2018/02/12 16:05:27 by axbal            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
 SRCS = sources/draw_line.c	\
+	   sources/read_file.c	\
+	   sources/gen_map.c	\
 	   main.c				\
 
 SRCO = draw_line.o			\
+	   read_file.o			\
+	   gen_map.o			\
 	   main.o				\
 
 FLAGS = -Wall -Wextra -Werror
