@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 15:14:21 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/12 16:37:50 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/13 12:19:39 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	gen_map(t_data *data)
 	int		y;
 
 	xo = 280;
-	yo = 80;
+	yo = 180;
 	y = 0;
 	while (y < data->size_y)
 	{
@@ -29,7 +29,7 @@ void	gen_map(t_data *data)
 		{
 			if (y != 0)
 			{
-				draw_line(xo + (x * GAP_X), yo + (x * GAP_Y) - (data->dots[y][x] * COEF), (xo + GAP_X) + (x * GAP_X), (yo - GAP_Y) + (x * GAP_Y) - (data->dots[y - 1][x] * COEF), data);
+				draw_line(xo + (x * GAP_X), yo + (x * GAP_Y) - (data->dots[y][x] * COEF), (xo + GAP_Y) + (x * GAP_X), (yo - GAP_X) + (x * GAP_Y) - (data->dots[y - 1][x] * COEF), data);
 			}
 			if (x + 1 != data->size_x)
 			{
@@ -38,7 +38,7 @@ void	gen_map(t_data *data)
 			x++;
 		}
 		y++;
-		xo -= GAP_X;
-		yo += GAP_Y;
+		xo -= GAP_Y;
+		yo += GAP_X;
 	}
 }

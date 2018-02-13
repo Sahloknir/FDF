@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 13:05:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/12 15:05:23 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/13 11:52:08 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,16 @@ int		count_dots(char *str)
 	while (str[i] != '\0')
 	{
 		levier = 0;
-		if (str[i] != ' ' && str[i] != '\t' && (str[i] > '9' || str[i] < '0'))
+		if (str[i] != '-' && str[i] != ' ' && str[i] != '\t' &&
+		(str[i] > '9' || str[i] < '0'))
 			return (-1);
-		while (str[i] == ' ' || str[i] == '\t')
+		while (str[i] == ' ' || str[i] == '\t' || str[i] == '-')
+		{
+			if (str[i] == '-' && ((i == 0 || str[i - 1] != ' ') ||
+			(str[i + 1] > '9' || str[i + 1] < '0')))
+				return (-1);
 			i++;
+		}
 		while (str[i] >= '0' && str[i] <= '9')
 		{
 			if (levier == 0)
@@ -51,10 +57,10 @@ int		check_length(char **map, int size)
 	while (i < size)
 	{
 		ret = count_dots(map[i]);
-		if (nb == 0)
+		if (ret > nb)
 			nb = ret;
-		else if (nb != ret)
-			return (-1);
+//		else if (nb != ret)
+//			return (-1);
 		i++;
 	}
 	return (nb);
@@ -85,7 +91,7 @@ int		**split_to_int(char **map, int x, int y)
 		while (*s != '\0')
 		{
 			levier = 0;
-			while (*s >= '0' && *s <= '9')
+			while ((*s >= '0' && *s <= '9') || *s == '-')
 			{
 				if (levier == 0)
 				{
@@ -95,7 +101,7 @@ int		**split_to_int(char **map, int x, int y)
 				}
 				s++;
 			}
-			while ((*s > '9' || *s < '0') && *s != '\0')
+			while ((*s > '9' || *s < '0') && *s != '\0' && *s != '-')
 				s++;
 		}
 		i++;
@@ -128,12 +134,12 @@ void	read_dots(int fd, t_data *data)
 	data->dots = NULL;
 	data->dots = split_to_int(map, size_x, size_y);
 	i = 0;
-	while (i < size_y)
-	{
-		ft_print_nbrs(data->dots[i], size_x);
-		ft_putchar('\n');
-		i++;
-	}
+//	while (i < size_y)
+//	{
+//		ft_print_nbrs(data->dots[i], size_x);
+//		ft_putchar('\n');
+//		i++;
+//	}
 	if (size_y == 0)
 		ft_error(1);
 }
