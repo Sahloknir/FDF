@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 13:05:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/13 11:52:08 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/13 16:04:00 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,11 @@ int		count_dots(char *str)
 		if (str[i] != '-' && str[i] != ' ' && str[i] != '\t' &&
 		(str[i] > '9' || str[i] < '0'))
 			return (-1);
-		while (str[i] == ' ' || str[i] == '\t' || str[i] == '-')
+		while (str[i] == ' ' || str[i] == '\t')
 		{
-			if (str[i] == '-' && ((i == 0 || str[i - 1] != ' ') ||
-			(str[i + 1] > '9' || str[i + 1] < '0')))
-				return (-1);
 			i++;
 		}
-		while (str[i] >= '0' && str[i] <= '9')
+		while (str[i] == '-' || (str[i] >= '0' && str[i] <= '9'))
 		{
 			if (levier == 0)
 			{
