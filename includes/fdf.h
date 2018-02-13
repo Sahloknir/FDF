@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/13 12:18:58 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/13 14:30:42 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 # define MLX data->mlx_ptr
 # define WIN data->win_ptr
 
-# define GAP_Y -2
-# define GAP_X 10
-# define COEF 1
+# define XO 100
+# define YO 80
+# define GAP_Y 8
+# define GAP_X 40
+# define COEF 4
 
 typedef struct		s_data
 {
