@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 13:05:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/13 16:04:00 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/21 15:03:15 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ int		check_length(char **map, int size)
 	int		ret;
 
 	i = 0;
-	nb = 0;
+	nb = -1;
 	while (i < size)
 	{
 		ret = count_dots(map[i]);
-		if (ret > nb)
+		if (nb == -1)
 			nb = ret;
-//		else if (nb != ret)
-//			return (-1);
+		else if (ret != nb)
+			return (-1);
 		i++;
 	}
 	return (nb);
@@ -131,12 +131,6 @@ void	read_dots(int fd, t_data *data)
 	data->dots = NULL;
 	data->dots = split_to_int(map, size_x, size_y);
 	i = 0;
-//	while (i < size_y)
-//	{
-//		ft_print_nbrs(data->dots[i], size_x);
-//		ft_putchar('\n');
-//		i++;
-//	}
 	if (size_y == 0)
 		ft_error(1);
 }

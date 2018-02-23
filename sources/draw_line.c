@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 12:44:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/13 11:59:02 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/22 16:33:43 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	large_angle(int x1, int y1, int x2, int y2, t_data *data)
 			current_x++;
 			ratio_scale -= ratio;
 		}
-		mlx_pixel_put(MLX, WIN, current_x, current_y, 0xFFFFFF);
+		mlx_pixel_put(MLX, WIN, current_x, current_y, data->colors[4]);
 		ratio_scale += 1;
 		current_y += growth;
 	}
@@ -49,12 +49,21 @@ void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
 	int		current_y;
 	int		growth;
 
+	float	t1;
+	float	t2;
+	int		cgrowth;
+
 //	printf("drawing sharp angle from (%i;%i) to (%i;%i)\n", x1, y1, x2, y2);
 	growth = y2 < y1 ? -1 : 1;
 	ratio = y1 > y2 ? (float)(x2 - x1)/(y1 - y2) : (float)(x2 - x1)/(y2 - y1);
 	ratio_scale = 1;
 	current_x = x1;
 	current_y = y1;
+
+	t1 = 1;
+	t2 = (x2 - x1) / data->c_y2;
+	cgrowth = 1;
+
 	while (current_x != x2)
 	{
 		if (ratio_scale >= ratio)
@@ -62,9 +71,15 @@ void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
 			current_y += growth;
 			ratio_scale -= ratio;
 		}
-		mlx_pixel_put(MLX, WIN, current_x, current_y, 0xFFFFFF);
+		if (t1 >= t2)
+		{
+			t1 -= t2;
+			data->c_y1 += cgrowth;
+		}
+		mlx_pixel_put(MLX, WIN, current_x, current_y, data->colors[0]);
 		ratio_scale += 1;
 		current_x++;
+		t1++;
 	}
 //	mlx_pixel_put(MLX, WIN, x1, y1, 0xFF0000);
 //	mlx_pixel_put(MLX, WIN, x2, y2, 0xFF0000);

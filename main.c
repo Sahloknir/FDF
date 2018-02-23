@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/12 16:04:36 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/21 19:11:03 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ t_data	*global_init(char *name, int fd)
 
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
 		return (NULL);
+	read_dots(fd, data);
+	size_map(data);
 	MLX = mlx_init();
 	WIN = mlx_new_window(MLX, WIN_WIDTH, WIN_HEIGHT, name);
-	read_dots(fd, data);
 	return (data);
 }
 
@@ -94,14 +95,10 @@ int		main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 3 && fd != 1)
 		ft_error(1);
-	data = global_init("fdf", fd);
+	data = global_init(argv[1], fd);
 	mlx_key_hook(WIN, print_key, (void *)0);
+	gen_colors(data);
 	gen_map(data);
-//	draw_circle(400, 250, 200, data);
-//	draw_line(100, 100, 120, 115, data);
-//	draw_line(85, 120, 100, 100, data);
-//	draw_line(105, 135, 120, 115, data);
-//	draw_line(85, 120, 105, 135, data);
 	mlx_loop(MLX);
 	return (0);
 }
