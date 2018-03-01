@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/22 15:56:53 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/01 11:39:53 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,7 @@
 # define YO data->y0
 # define GAP_Y data->gap_y
 # define GAP_X data->gap_x
-# define COEF 0.8
-
-/*
-Colors :
-
-   Blue :
-     0xb3dafb
-
-   Green (light to dark):
-     0xdaeec7
-     0xcceab8
-     0xc8e5b4
-     0xc3e0b0
-
-   White :
-     0xf1eee9
-*/
+# define COEF data->coef
 
 typedef struct		s_data
 {
@@ -59,20 +43,23 @@ typedef struct		s_data
 	int				gap_x;
 	int				x0;
 	int				y0;
-	int				coef;
+	float			coef;
 	int				*colors;
 	int				decal;
 	int				range;
 	int				c_y1;
 	int				c_y2;
+	int				cgrowth;
+	int				nocolor;
 }					t_data;
 
 void	draw_line(int x1, int y1, int x2, int y2, t_data *data);
 void	read_dots(int fd, t_data *data);
-int		ft_error(int error);
+void	ft_error(int error);
 void	gen_map(t_data *data);
 void	size_map(t_data *data);
 void	gen_colors(t_data *data);
-void	color_set(t_data *data);
+void	color_set(t_data *data, int c_y1, int c_y2);
+void	get_options(t_data *data, char *input);
 
 #endif

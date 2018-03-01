@@ -6,7 +6,7 @@
 #    By: axbal <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 14:54:13 by axbal             #+#    #+#              #
-#    Updated: 2018/02/21 18:59:08 by axbal            ###   ########.fr        #
+#    Updated: 2018/03/01 01:08:20 by axbal            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,14 @@ SRCS = sources/draw_line.c	\
 	   sources/read_file.c	\
 	   sources/gen_map.c	\
 	   sources/gen_colors.c	\
+	   sources/utility.c	\
 	   main.c				\
 
 SRCO = draw_line.o			\
 	   read_file.o			\
 	   gen_map.o			\
 	   gen_colors.o			\
+	   utility.o			\
 	   main.o				\
 
 FLAGS = -Wall -Wextra -Werror

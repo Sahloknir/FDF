@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 15:14:21 by axbal             #+#    #+#             */
-/*   Updated: 2018/02/22 15:57:00 by axbal            ###   ########.fr       */
+/*   Updated: 2018/02/28 23:51:18 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,14 @@ void	gen_map(t_data *data)
 		{
 			if (y != 0)
 			{
-				data->c_y1 = data->dots[y][x] + data->decal;
-				data->c_y2 = data->dots[y - 1][x] + data->decal;
-				color_set(data);
+				color_set(data, data->dots[y][x], data->dots[y - 1][x]);
+//				printf("start from index %i, divide in %i colors with growth = %i\n", data->c_y1, data->c_y2, data->cgrowth);
 				draw_line(xo + (x * GAP_X), yo + (x * GAP_Y) - (data->dots[y][x] * COEF), (xo + GAP_Y) + (x * GAP_X), (yo - GAP_X) + (x * GAP_Y) - (data->dots[y - 1][x] * COEF), data);
 			}
 			if (x + 1 != data->size_x)
 			{
-				data->c_y1 = data->dots[y][x] + data->decal;
-				data->c_y2 = data->dots[y][x + 1] + data->decal;
-				color_set(data);
+				color_set(data, data->dots[y][x], data->dots[y][x + 1]);
+//				printf("start from index %i, divide in %i colors with growth = %i\n", data->c_y1, data->c_y2, data->cgrowth);
 				draw_line(xo + (x * GAP_X), yo + (x * GAP_Y) - (data->dots[y][x] * COEF), xo + ((x + 1) * GAP_X), yo + ((x + 1) * GAP_Y) - (data->dots[y][x + 1] * COEF), data);
 			}
 			x++;
