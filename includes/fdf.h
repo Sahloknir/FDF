@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/01 11:39:53 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/03 17:45:38 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ void	gen_map(t_data *data);
 void	size_map(t_data *data);
 void	gen_colors(t_data *data);
 void	color_set(t_data *data, int c_y1, int c_y2);
-void	get_options(t_data *data, char *input);
+void	get_options(t_data *data, char **input, int argc);
 
 #endif

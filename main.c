@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/01 12:39:11 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/03 18:45:34 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,22 @@ void	ft_error(int error)
 	exit(1);
 }
 
-t_data	*global_init(char *name, int fd)
+t_data	*global_init(char **argv, int fd, int argc)
 {
 	t_data	*data;
 
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
 		return (NULL);
+	data->coef = 2;
+	data->nocolor = 0;
+	data->gap_x = 0;
+	WIN_WIDTH = 0;
+	WIN_HEIGHT = 0;
+	get_options(data, argv, argc);
 	read_dots(fd, data);
 	size_map(data);
 	MLX = mlx_init();
-	WIN = mlx_new_window(MLX, WIN_WIDTH, WIN_HEIGHT, name);
-	data->coef = 2;
-	data->nocolor = 0;
+	WIN = mlx_new_window(MLX, WIN_WIDTH, WIN_HEIGHT, argv[1]);
 	return (data);
 }
 
@@ -57,9 +61,7 @@ int		main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 3 && fd != 1)
 		ft_error(1);
-	data = global_init(argv[1], fd);
-	while (argc-- > 2)
-		get_options(data, argv[argc]);
+	data = global_init(argv, fd, argc);
 	gen_colors(data);
 	gen_map(data);
 	mlx_key_hook(WIN, print_key, (void *)0);

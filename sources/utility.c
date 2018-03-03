@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 00:59:30 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/01 16:04:03 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/03 18:44:50 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,41 @@ void	get_coef(char *str, t_data *data)
 		data->coef = ft_atoi(str);
 }
 
-void	get_options(t_data *data, char *input)
+int		ft_isnum(char *str)
 {
-	if (ft_strcmp(input, "-nocolor") == 0)
-		data->nocolor = 1;
-	else if (ft_strncmp(input, "-coef", 5) == 0)
-		get_coef(input + 5, data);
-	else
-		ft_error(2);
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] > '9' || str[i] < '0')
+			return (-1);
+		i++;
+	}
+	return (1);
+}
+
+void	get_options(t_data *data, char **input, int argc)
+{
+	int		i;
+
+	i = 2;
+	if (argc >= 4 && ft_isnum(input[2]) == 1 && ft_isnum(input[3]) == 1)
+	{
+		WIN_WIDTH = ft_atoi(input[2]);
+		WIN_HEIGHT = ft_atoi(input[3]);
+		i = 4;
+	}
+	while (i < argc)
+	{
+		if (ft_strcmp(input[i], "-nocolor") == 0)
+			data->nocolor = 1;
+		else if (ft_strncmp(input[i], "-coef", 5) == 0)
+			get_coef(input[i] + 5, data);
+		else if (ft_strncmp(input[i], "-size", 5) == 0)
+			data->gap_x = ft_atoi(input[i] + 5);
+		else
+			ft_error(2);
+		i++;
+	}
 }
