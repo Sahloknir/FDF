@@ -6,17 +6,31 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/03 18:45:34 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/05 16:27:56 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/fdf.h"
 
-int		print_key(int key, void *param)
+int		refresh_expose(t_data *data)
 {
-	param = 0;
+	mlx_clear_window(MLX, WIN);
+	mlx_put_image_to_window(MLX, WIN, IMG, IMG_X, IMG_Y);
+	if (data->controls == 1)
+		show_controls(data, 1);
+	return (0);
+}
+
+int		redirect_key(int key, t_data *data)
+{
 	if (key == 53)
 		exit(0);
+	else if (key >= 123 && key <= 126)
+		move_img(key, data);
+	else if (key == 8)
+		show_controls(data, 0);
+	else if (key == 24 || key == 27)
+		edit_coef(key, data);
 	ft_putnbr(key);
 	return (0);
 }
@@ -40,14 +54,22 @@ t_data	*global_init(char **argv, int fd, int argc)
 		return (NULL);
 	data->coef = 2;
 	data->nocolor = 0;
+	data->controls = 1;
 	data->gap_x = 0;
 	WIN_WIDTH = 0;
 	WIN_HEIGHT = 0;
+	IMG_X = 0;
+	IMG_Y = 0;
 	get_options(data, argv, argc);
 	read_dots(fd, data);
+	gen_colors(data);
 	size_map(data);
 	MLX = mlx_init();
 	WIN = mlx_new_window(MLX, WIN_WIDTH, WIN_HEIGHT, argv[1]);
+	IMG = mlx_new_image(MLX, IMG_W, IMG_H);
+	IMG_STR = mlx_get_data_addr(IMG, &BPP, &S_L, &ENDIAN);
+	BPP = BPP / 8;
+	gen_map(data);
 	return (data);
 }
 
@@ -62,9 +84,8 @@ int		main(int argc, char **argv)
 	if (fd < 3 && fd != 1)
 		ft_error(1);
 	data = global_init(argv, fd, argc);
-	gen_colors(data);
-	gen_map(data);
-	mlx_key_hook(WIN, print_key, (void *)0);
+	mlx_key_hook(WIN, redirect_key, data);
+	mlx_expose_hook(WIN, refresh_expose, data);
 	mlx_loop(MLX);
 	return (0);
 }

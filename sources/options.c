@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utility.c                                          :+:      :+:    :+:   */
+/*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 00:59:30 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/03 18:44:50 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/05 16:40:00 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,46 @@ int		ft_isnum(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	move_img(int key, t_data *data)
+{
+	if (key == 123)
+		IMG_X -= 10;
+	else if (key == 124)
+		IMG_X += 10;
+	else if (key == 125)
+		IMG_Y += 10;
+	else if (key == 126)
+		IMG_Y -= 10;
+	refresh_expose(data);
+}
+
+void	show_controls(t_data *data, int mode)
+{
+	if (mode == 0)
+	{
+		data->controls *= -1;
+		refresh_expose(data);
+	}
+	else
+	{
+		mlx_string_put(MLX, WIN, 50, 50, 0xFFFFFF, "Henlo Fren !");
+	}
+}
+
+void	edit_coef(int key, t_data *data)
+{
+	if (key == 24)
+		COEF += 0.1;
+	else if (key == 27)
+		COEF -= 0.1;
+	mlx_destroy_image(MLX, IMG);
+	IMG = mlx_new_image(MLX, IMG_W, IMG_H);
+	IMG_STR = mlx_get_data_addr(IMG, &BPP, &S_L, &ENDIAN);
+	BPP /= 8;
+	gen_map(data);
+	refresh_expose(data);
 }
 
 void	get_options(t_data *data, char **input, int argc)

@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 12:44:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/01 11:25:18 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/05 00:57:41 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	large_angle(int x1, int y1, int x2, int y2, t_data *data)
 			data->c_y1 += cgrowth;
 			test++;
 		}
-		mlx_pixel_put(MLX, WIN, current_x, current_y, data->colors[data->c_y1]);
+		put_pixel_to_image(current_x, current_y, data, data->colors[data->c_y1]);
 		ratio_scale += 1;
 		current_y += growth;
 		t1++;
@@ -102,7 +102,7 @@ void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
 			test++;
 			data->c_y1 += cgrowth;
 		}
-		mlx_pixel_put(MLX, WIN, current_x, current_y, data->colors[data->c_y1]);
+		put_pixel_to_image(current_x, current_y, data, data->colors[data->c_y1]);
 		ratio_scale += 1;
 		current_x++;
 		t1++;
@@ -142,7 +142,7 @@ void	vertical_line(int x1, int y1, int x2, int y2, t_data *data)
 			cpt++;
 			data->c_y1+= cgrowth;
 		}
-		mlx_pixel_put(MLX, WIN, x1, current_y, data->colors[data->c_y1]);
+		put_pixel_to_image(x1, current_y, data, data->colors[data->c_y1]);
 		current_y += growth;
 		t1++;
 	}
@@ -173,7 +173,7 @@ void	horizontal_line(int x1, int y1, int x2, int y2, t_data *data)
 			t1 -= t2;
 			data->c_y1 += cgrowth;
 		}
-		mlx_pixel_put(MLX, WIN, current_x, y1, data->colors[data->c_y1]);
+		put_pixel_to_image(current_x, y1, data, data->colors[data->c_y1]);
 		current_x++;
 		t1++;
 	}

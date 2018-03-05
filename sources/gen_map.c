@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 15:14:21 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/03 18:45:08 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/05 16:06:03 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	gen_map(t_data *data)
 			if (y != 0)
 			{
 				color_set(data, data->dots[y][x], data->dots[y - 1][x]);
-//				printf("start from index %i, divide in %i colors with growth = %i\n", data->c_y1, data->c_y2, data->cgrowth);
+				//				printf("start from index %i, divide in %i colors with growth = %i\n", data->c_y1, data->c_y2, data->cgrowth);
 				draw_line(xo + (x * GAP_X), yo + (x * GAP_Y) - (data->dots[y][x] * COEF), (xo + GAP_Y) + (x * GAP_X), (yo - GAP_X) + (x * GAP_Y) - (data->dots[y - 1][x] * COEF), data);
 			}
 			if (x + 1 != data->size_x)
 			{
 				color_set(data, data->dots[y][x], data->dots[y][x + 1]);
-//				printf("start from index %i, divide in %i colors with growth = %i\n", data->c_y1, data->c_y2, data->cgrowth);
+				//				printf("start from index %i, divide in %i colors with growth = %i\n", data->c_y1, data->c_y2, data->cgrowth);
 				draw_line(xo + (x * GAP_X), yo + (x * GAP_Y) - (data->dots[y][x] * COEF), xo + ((x + 1) * GAP_X), yo + ((x + 1) * GAP_Y) - (data->dots[y][x + 1] * COEF), data);
 			}
 			x++;
@@ -44,6 +44,25 @@ void	gen_map(t_data *data)
 		y++;
 		xo -= GAP_Y;
 		yo += GAP_X;
+	}
+}
+
+void	adapt_coef(t_data *data)
+{
+	int		max_alt;
+	int		min_alt;
+
+	max_alt = (YO + (data->max_y * GAP_X)) + (data->max_x * GAP_Y)
+	- (data->max_val * COEF);
+	min_alt = (YO + (data->min_y * GAP_X)) + (data->min_x * GAP_Y)
+	- (data->dots[data->min_y][data->min_x] * COEF);
+	while (max_alt < 0 || min_alt > IMG_H)
+	{
+		COEF -= COEF > 1 ? 1 : 0.1;
+		max_alt = (YO + (data->max_y * GAP_X)) + (data->max_x * GAP_Y)
+		- (data->dots[data->max_y][data->max_x] * COEF);
+		min_alt = (YO + (data->min_y * GAP_X)) + (data->min_x * GAP_Y)
+		- (data->dots[data->min_y][data->min_x] * COEF);
 	}
 }
 
@@ -70,4 +89,7 @@ void	size_map(t_data *data)
 	}
 	data->x0 = data->size_y * data->gap_y + 30;
 	data->y0 = 50;
+	IMG_W = (data->gap_x * data->size_x) + (data->gap_y * data->size_y) + 30;
+	IMG_H = (data->gap_x * data->size_y) + (data->gap_y * data->size_x) + 50;
+	adapt_coef(data);
 }
