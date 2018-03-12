@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 13:05:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/01 15:58:50 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/08 11:05:03 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		**split_to_int(char **map, int x, int y)
 				s++;
 			}
 			if (*s == ',')
-				s += 9;
+					s += 9;
 			while ((*s > '9' || *s < '0') && *s != '\0' && *s != '-')
 				s++;
 		}
@@ -118,16 +118,20 @@ void	read_dots(int fd, t_data *data)
 	char	*line;
 	char	**map;
 
+	int		ret;
+
 	size_x = 0;
 	size_y = 0;
 	i = 0;
 	if (!(map = (char **)malloc(sizeof(char *) * 2048)))
 		ft_error(3);
-	while (get_next_line(fd, &line) != 0)
+	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		map[i++] = line;
 		size_y++;
 	}
+	if (size_y == 0)
+		ft_error(1);
 	if ((size_x = check_length(map, i)) == -1)
 		ft_error(1);
 	data->size_y = size_y;
@@ -135,6 +139,4 @@ void	read_dots(int fd, t_data *data)
 	data->dots = NULL;
 	data->dots = split_to_int(map, size_x, size_y);
 	i = 0;
-	if (size_y == 0)
-		ft_error(1);
 }

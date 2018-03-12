@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/05 16:28:44 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/09 16:19:49 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define GAP_Y data->gap_y
 # define GAP_X data->gap_x
 # define COEF data->coef
+# define COEF_GAP data->coef_gap
 
 typedef struct		s_color
 {
@@ -76,6 +77,7 @@ typedef struct		s_data
 	int				x0;
 	int				y0;
 	float			coef;
+	float			coef_gap;
 	t_color			*colors;
 	int				decal;
 	int				range;
@@ -99,5 +101,6 @@ void	show_controls(t_data *data, int mode);
 void	move_img(int key, t_data *data);
 int		refresh_expose(t_data *data);
 void	edit_coef(int key, t_data *data);
+void	rotate(int key, t_data *data);
 
 #endif

@@ -6,12 +6,13 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 15:48:16 by axbal             #+#    #+#             */
-/*   Updated: 2018/01/31 14:00:26 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/05 19:59:57 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# define BUFF_SIZE 512
 
 # include <string.h>
 # include <stdlib.h>

@@ -5,130 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/15 12:24:58 by axbal             #+#    #+#             */
-/*   Updated: 2018/01/31 13:52:44 by axbal            ###   ########.fr       */
+/*   Created: 2018/03/05 19:59:16 by axbal             #+#    #+#             */
+/*   Updated: 2018/03/05 19:59:18 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/get_next_line.h"
+#include "libft.h"
 
-int		find_line(char *buf, int ret)
+int		ft_stock_up(char **stock)
 {
-	int		i;
+	char	*copy;
 
-	i = 0;
-	if (buf == NULL)
-		return (0);
-	while (i < ret && buf[i])
+	if (*stock == NULL)
 	{
-		if (buf[i] == '\n')
-			return (1);
-		if (buf[i] == '\0')
-			return (2);
-		i++;
-	}
-	return (0);
-}
-
-char	*fill_line(char *buf, char **line)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	if (!(buf))
-	{
-		*line = "";
-		return (NULL);
-	}
-	while (buf[i] != '\0' && buf[i] != '\n')
-		i++;
-	buf[i] = '\0';
-	*line = ft_strdup(buf);
-	buf[i] = ' ';
-	if (buf + i + 1)
-	{
-		tmp = ft_strdup(buf + i + 1);
-		free(buf);
-		buf = ft_strdup(tmp);
-		free(tmp);
-	}
-	else
-		free(buf);
-	return (buf == NULL ? NULL : buf);
-}
-
-char	*concat_buf(char *save, char *buf)
-{
-	char	*tmp;
-	int		size;
-
-	tmp = NULL;
-	if (save != NULL)
-	{
-		tmp = ft_strdup(save);
-		free(save);
-		size = ft_strlen(tmp) + ft_strlen(buf) + 1;
-		if (!(save = malloc(sizeof(char) * size)))
-			return (NULL);
-		save = ft_strcpy(save, tmp);
-		save = ft_strcat(save, buf);
-		free(tmp);
-	}
-	else
-	{
-		size = ft_strlen(buf) + 1;
-		save = ft_strdup(buf);
-	}
-	return (save);
-}
-
-int		norm(int ret, int *stop, char *save, int mode)
-{
-	int		i;
-
-	if (mode == 1)
-	{
-		if (ret == -1)
+		if (!(*stock = ft_strnew(BUFF_SIZE)))
 			return (-1);
-		else
-			*stop = 3;
-		return (0);
+		return (1);
 	}
-	if (mode == 2)
+	if (!(copy = ft_strdup(*stock)))
+		return (-1);
+	free(*stock);
+	if (!(*stock = ft_strnew(ft_strlen(copy) + BUFF_SIZE)))
+		return (-1);
+	ft_strncpy(*stock, copy, ft_strlen(copy));
+	free(copy);
+	return (1);
+}
+
+int		ft_fill_line(char **line, char **stok, int select, int select2)
+{
+	free(*line);
+	if (ft_memchr(*stok, '\n', ft_strlen(*stok)))
 	{
-		i = 0;
-		while (save[i] != '\0')
-			save[i++] = '\0';
+		while ((*stok)[select] && ((*stok)[select] != '\n'))
+			select++;
+		if (!(*line = ft_strdup(*stok)))
+			return (-1);
+		(*line)[select] = '\0';
+		while ((*stok)[select++])
+		{
+			(*stok)[select2] = (*stok)[select];
+			select2++;
+		}
+		while (++select2 != select)
+			(*stok)[select2] = '\0';
+		return (1);
 	}
-	return (0);
+	else if (!(*line = ft_strdup(*stok)))
+			return (-1);
+	ft_bzero(*stok, BUFF_SIZE);
+	return (1);
 }
 
 int		get_next_line(const int fd, char **line)
 {
-	int				stop;
+	static char		*stock;
+	char			*lu;
 	int				ret;
-	char			buf[BUFF_SIZE + 1];
-	static char		*save;
 
-	stop = 0;
-	if ((fd < 3 && fd != 0) || BUFF_SIZE <= 0 || line == NULL)
+	if ((fd != 0 && fd < 3) || BUFF_SIZE < 1 || !(&*line)
+	|| !(*line = ft_strnew(BUFF_SIZE)))
 		return (-1);
-	if (save && find_line(save, ft_strlen(save)) == 1)
-		stop = 1;
-	while (stop == 0)
+	while ((lu = ft_strnew(BUFF_SIZE)) && (ret = read(fd, lu, BUFF_SIZE)) > 0)
 	{
-		if ((ret = read(fd, buf, BUFF_SIZE)) > 0)
-		{
-			buf[ret] = '\0';
-			stop = find_line(buf, ret);
-			save = concat_buf(save, buf);
-		}
-		else if (norm(ret, &stop, NULL, 1) == -1)
+		lu[ret] = '\0';
+		if (!(ft_stock_up(&stock)))
 			return (-1);
+		ft_strncat(stock, lu, ret);
+		free(lu);
+		if (ft_memchr((ft_strlen(stock) - BUFF_SIZE) + stock, '\n', ret))
+			return (ft_fill_line(line, &stock, 0, 0));
 	}
-	save = fill_line(save, line);
-	if (stop == 3 && ft_strlen(*line) == 0)
-		return (norm(0, 0, save, 2));
-	return (1);
+	if (ret < 0 || !(lu))
+		return (-1);
+	free(lu);
+	if (stock && ft_strlen(stock) > 0)
+		return (ft_fill_line(line, &stock, 0, 0));
+	ft_bzero(*line, BUFF_SIZE);
+	return (0);
 }

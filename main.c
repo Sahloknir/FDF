@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/05 16:27:56 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/09 16:19:25 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int		redirect_key(int key, t_data *data)
 		move_img(key, data);
 	else if (key == 8)
 		show_controls(data, 0);
-	else if (key == 24 || key == 27)
+	else if (key == 24 || key == 27 || key == 30 || key == 33)
 		edit_coef(key, data);
+	else if (key == 12 || key == 14)
+		rotate(key, data);
 	ft_putnbr(key);
 	return (0);
 }
@@ -43,6 +45,8 @@ void	ft_error(int error)
 		ft_putstr("incorrect file\n");
 	if (error == 2)
 		ft_putstr("invalid option\n");
+	if (error == 3)
+		ft_putstr("cannot find this file\n");
 	exit(1);
 }
 
@@ -52,16 +56,17 @@ t_data	*global_init(char **argv, int fd, int argc)
 
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
 		return (NULL);
-	data->coef = 2;
+	data->coef = 1;
+	data->coef_gap = 1;
 	data->nocolor = 0;
-	data->controls = 1;
+	data->controls = -1;
 	data->gap_x = 0;
 	WIN_WIDTH = 0;
 	WIN_HEIGHT = 0;
 	IMG_X = 0;
 	IMG_Y = 0;
-	get_options(data, argv, argc);
 	read_dots(fd, data);
+	get_options(data, argv, argc);
 	gen_colors(data);
 	size_map(data);
 	MLX = mlx_init();
@@ -81,8 +86,8 @@ int		main(int argc, char **argv)
 	if (argc < 2)
 		ft_error(0);
 	fd = open(argv[1], O_RDONLY);
-	if (fd < 3 && fd != 1)
-		ft_error(1);
+	if (fd < 3 && fd != 0)
+		ft_error(3);
 	data = global_init(argv, fd, argc);
 	mlx_key_hook(WIN, redirect_key, data);
 	mlx_expose_hook(WIN, refresh_expose, data);

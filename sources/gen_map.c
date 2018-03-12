@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 15:14:21 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/05 16:06:03 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/08 12:47:43 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	size_map(t_data *data)
 		data->gap_y = 1;
 	if (data->win_w == 0)
 	{
-		data->win_w = (data->gap_x * data->size_x) + (data->gap_y * data->size_y) + 30;
-		data->win_h = (data->gap_x * data->size_y) + (data->gap_y * data->size_x) + 50;
+		WIN_WIDTH = (GAP_X * data->size_x) + (GAP_Y * data->size_y) + 30;
+		WIN_HEIGHT = (GAP_X * data->size_y) + (GAP_Y * data->size_x) + 50;
 	}
 	while ((data->win_w > 1900 || data->win_h > 800) && data->gap_x > 1)
 	{
@@ -84,12 +84,12 @@ void	size_map(t_data *data)
 		data->gap_y = data->gap_x / 5;
 		if (data->gap_y <= 0)
 			data->gap_y = 1;
-		data->win_w = (data->gap_x * data->size_x) + (data->gap_y * data->size_y) + 30;
-		data->win_h = (data->gap_x * data->size_y) + (data->gap_y * data->size_x) + 50;
+		WIN_WIDTH = (GAP_X * data->size_x) + (GAP_Y * data->size_y) + 30;
+		WIN_HEIGHT = (GAP_X * data->size_y) + (GAP_Y * data->size_x) + 50;
 	}
 	data->x0 = data->size_y * data->gap_y + 30;
 	data->y0 = 50;
-	IMG_W = (data->gap_x * data->size_x) + (data->gap_y * data->size_y) + 30;
-	IMG_H = (data->gap_x * data->size_y) + (data->gap_y * data->size_x) + 50;
+	IMG_W = (GAP_X * data->size_x) + (GAP_Y * data->size_y) + 30;
+	IMG_H = (GAP_X * data->size_y) + (GAP_Y * data->size_x) + 50;
 	adapt_coef(data);
 }
