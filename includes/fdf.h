@@ -6,14 +6,14 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 11:45:03 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/27 18:35:47 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "../libft/libft.h"
+# include "../libft/includes/libft.h"
 # include "../mlx/mlx.h"
 # include <stdlib.h>
 # include <fcntl.h>
