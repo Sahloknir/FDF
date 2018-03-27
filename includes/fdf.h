@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/09 16:19:49 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/27 11:45:03 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@
 # define GAP_X data->gap_x
 # define COEF data->coef
 # define COEF_GAP data->coef_gap
+
+typedef struct		s_dot
+{
+	int				x;
+	int				y;
+}					t_dot;
 
 typedef struct		s_color
 {
@@ -89,7 +95,8 @@ typedef struct		s_data
 }					t_data;
 
 void	draw_line(int x1, int y1, int x2, int y2, t_data *data);
-void	read_dots(int fd, t_data *data);
+void	read_dots(int fd, t_data *data, int i);
+int		**split_to_int(char **map, int x, int y);
 void	ft_error(int error);
 void	gen_map(t_data *data);
 void	size_map(t_data *data);

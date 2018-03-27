@@ -6,42 +6,48 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 15:14:21 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/08 12:47:43 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/27 10:32:57 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
+void	pick_line(t_data *data, t_dot d, int xo, int yo)
+{
+	if (d.y != 0)
+	{
+		color_set(data, data->dots[d.y][d.x], data->dots[d.y - 1][d.x]);
+		draw_line(xo + (d.x * GAP_X), yo + (d.x * GAP_Y)
+		- (data->dots[d.y][d.x] * COEF), (xo + GAP_Y) + (d.x * GAP_X),
+		(yo - GAP_X) + (d.x * GAP_Y) - (data->dots[d.y - 1][d.x] * COEF), data);
+	}
+	if (d.x + 1 != data->size_x)
+	{
+		color_set(data, data->dots[d.y][d.x], data->dots[d.y][d.x + 1]);
+		draw_line(xo + (d.x * GAP_X), yo + (d.x * GAP_Y)
+		- (data->dots[d.y][d.x] * COEF), xo + ((d.x + 1) * GAP_X), yo
+		+ ((d.x + 1) * GAP_Y) - (data->dots[d.y][d.x + 1] * COEF), data);
+	}
+}
+
 void	gen_map(t_data *data)
 {
 	int		xo;
 	int		yo;
-	int		x;
-	int		y;
+	t_dot	d;
 
 	xo = XO;
 	yo = YO;
-	y = 0;
-	while (y < data->size_y)
+	d.y = 0;
+	while (d.y < data->size_y)
 	{
-		x = 0;
-		while (x < data->size_x)
+		d.x = 0;
+		while (d.x < data->size_x)
 		{
-			if (y != 0)
-			{
-				color_set(data, data->dots[y][x], data->dots[y - 1][x]);
-				//				printf("start from index %i, divide in %i colors with growth = %i\n", data->c_y1, data->c_y2, data->cgrowth);
-				draw_line(xo + (x * GAP_X), yo + (x * GAP_Y) - (data->dots[y][x] * COEF), (xo + GAP_Y) + (x * GAP_X), (yo - GAP_X) + (x * GAP_Y) - (data->dots[y - 1][x] * COEF), data);
-			}
-			if (x + 1 != data->size_x)
-			{
-				color_set(data, data->dots[y][x], data->dots[y][x + 1]);
-				//				printf("start from index %i, divide in %i colors with growth = %i\n", data->c_y1, data->c_y2, data->cgrowth);
-				draw_line(xo + (x * GAP_X), yo + (x * GAP_Y) - (data->dots[y][x] * COEF), xo + ((x + 1) * GAP_X), yo + ((x + 1) * GAP_Y) - (data->dots[y][x + 1] * COEF), data);
-			}
-			x++;
+			pick_line(data, d, xo, yo);
+			d.x++;
 		}
-		y++;
+		d.y++;
 		xo -= GAP_Y;
 		yo += GAP_X;
 	}

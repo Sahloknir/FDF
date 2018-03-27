@@ -6,43 +6,48 @@
 #    By: axbal <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 14:54:13 by axbal             #+#    #+#              #
-#    Updated: 2018/03/05 00:58:16 by axbal            ###   ########.fr        #
+#    Updated: 2018/03/27 12:13:08 by axbal            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-SRCS = sources/draw_line.c	\
-	   sources/read_file.c	\
-	   sources/gen_map.c	\
-	   sources/gen_colors.c	\
-	   sources/options.c	\
-	   sources/pixel_to_image.c	\
-	   main.c				\
+SRCDIR = sources
+SRCS = options.c		\
+	   options2.c		\
+	   draw_line.c		\
+	   read_file.c		\
+	   split_to_int.c	\
+	   pixel_to_image.c	\
+	   gen_colors.c		\
+	   utilities.c		\
+	   gen_map.c		\
+	   main.c			\
 
-SRCO = draw_line.o			\
-	   read_file.o			\
-	   gen_map.o			\
-	   gen_colors.o			\
-	   options.o			\
-	   pixel_to_image.o			\
-	   main.o				\
+OBJDIR = obj
+OBJS = $(SRCS:.c=.o)
+
+SRC = $(addprefix $(SRCDIR)/,$(SRCS))
+OBJ = $(addprefix $(OBJDIR)/,$(OBJS))
 
 FLAGS = -Wall -Wextra -Werror
+FRAMEWORK = -framework OpenGl -framework AppKit
 
 LIBFT = ./Libft/libft.a
-
 MLX = ./mlx/libmlx.a
 
-FRAMEWORK = -framework OpenGl -framework AppKit
+INCLUDE = -Iincludes
+
+.PHONY: all, clean, fclean, re
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MLX) $(SRCO)
-	gcc -o $(NAME) $(LIBFT) $(MLX) $(SRCO) $(FRAMEWORK)
+$(NAME): $(LIBFT) $(MLX) $(OBJ)
+	cc -o $(NAME) $(OBJ) $(LIBFT) $(MLX) $(FRAMEWORK)
 
-$(SRCO): $(SRCS)
-	gcc -c $(FLAGS) $(SRCS)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir $(OBJDIR) 2> /dev/null || true
+	cc $(FLAGS) $(INCLUDE) -o $@ -c $<
 
 $(LIBFT):
 	make -C libft
@@ -53,6 +58,7 @@ $(MLX):
 clean:
 	rm -rf $(SRCO)
 	make -C libft clean
+	@rmdir $(OBJDIR) 2> /dev/null || true
 
 fclean: clean
 	rm -rf $(NAME)

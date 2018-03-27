@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 12:44:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/05 00:57:41 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/27 10:20:23 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	large_angle(int x1, int y1, int x2, int y2, t_data *data)
 	int		abs;
 	int		test;
 
-//	printf("drawing large angle from (%i;%i) to (%i;%i)\n", x1, y1, x2, y2);
 	growth = y2 < y1 ? -1 : 1;
 	ratio = y1 > y2 ? (float)(y1 - y2)/(x2 - x1) : (float)(y2 - y1)/(x2 - x1);
 	ratio_scale = 1;
@@ -59,8 +58,6 @@ void	large_angle(int x1, int y1, int x2, int y2, t_data *data)
 		current_y += growth;
 		t1++;
 	}
-//	mlx_pixel_put(MLX, WIN, x1, y1, 0xFF0000);
-//	mlx_pixel_put(MLX, WIN, x2, y2, 0xFF0000);
 }
 
 void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
@@ -76,7 +73,6 @@ void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
 	int		cgrowth;
 	int		test;
 
-//	printf("drawing sharp angle from (%i;%i) to (%i;%i)\n", x1, y1, x2, y2);
 	growth = y2 < y1 ? -1 : 1;
 	ratio = y1 > y2 ? (float)(x2 - x1)/(y1 - y2) : (float)(x2 - x1)/(y2 - y1);
 	ratio_scale = 1;
@@ -88,7 +84,6 @@ void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
 	t2 = (x2 - x1) / data->c_y2;
 	cgrowth = data->cgrowth;
 
-//	printf("growth = %i\n", cgrowth);
 	while (current_x != x2)
 	{
 		if (ratio_scale >= ratio)
@@ -107,8 +102,6 @@ void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
 		current_x++;
 		t1++;
 	}
-//	mlx_pixel_put(MLX, WIN, x1, y1, 0xFF0000);
-//	mlx_pixel_put(MLX, WIN, x2, y2, 0xFF0000);
 }
 
 void	vertical_line(int x1, int y1, int x2, int y2, t_data *data)
@@ -120,7 +113,6 @@ void	vertical_line(int x1, int y1, int x2, int y2, t_data *data)
 	int		t1;
 	int		t2;
 
-//	printf("drawing vertical line from (%i;%i) to (%i;%i)\n", x1, y1, x2, y2);
 	x2 = 0;
 	growth = 1;
 	cgrowth = data->cgrowth;
@@ -146,8 +138,6 @@ void	vertical_line(int x1, int y1, int x2, int y2, t_data *data)
 		current_y += growth;
 		t1++;
 	}
-//	mlx_pixel_put(MLX, WIN, x1, y1, 0xFF0000);
-//	mlx_pixel_put(MLX, WIN, x2, y2, 0xFF0000);
 }
 
 void	horizontal_line(int x1, int y1, int x2, int y2, t_data *data)
@@ -158,7 +148,6 @@ void	horizontal_line(int x1, int y1, int x2, int y2, t_data *data)
 	int		t2;
 	int		cgrowth;
 
-//	printf("drawing horizontal line from (%i;%i) to (%i;%i)\n", x1, y1, x2, y2);
 	y2 = 0;
 	cpt = 1;
 	t1 = 1;
@@ -177,22 +166,14 @@ void	horizontal_line(int x1, int y1, int x2, int y2, t_data *data)
 		current_x++;
 		t1++;
 	}
-//	mlx_pixel_put(MLX, WIN, x1, y1, 0xFF0000);
-//	mlx_pixel_put(MLX, WIN, x2, y2, 0xFF0000);
 }
 
 void	draw_line(int x1, int y1, int x2, int y2, t_data *data)
 {
-	int		tmp;
-
 	if (x1 > x2)
 	{
-		tmp = x2;
-		x2 = x1;
-		x1 = tmp;
-		tmp = y2;
-		y2 = y1;
-		y1 = tmp;
+		ft_swap(&x1, &x2);
+		ft_swap(&y1, &y1);
 	}
 	if (x1 == x2)
 		vertical_line(x1, y1, x2, y2, data);

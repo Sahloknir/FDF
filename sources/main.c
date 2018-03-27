@@ -6,11 +6,11 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/09 16:19:25 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/27 11:17:11 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/fdf.h"
+#include "../includes/fdf.h"
 
 int		refresh_expose(t_data *data)
 {
@@ -65,7 +65,7 @@ t_data	*global_init(char **argv, int fd, int argc)
 	WIN_HEIGHT = 0;
 	IMG_X = 0;
 	IMG_Y = 0;
-	read_dots(fd, data);
+	read_dots(fd, data, 0);
 	get_options(data, argv, argc);
 	gen_colors(data);
 	size_map(data);
