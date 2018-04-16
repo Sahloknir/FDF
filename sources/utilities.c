@@ -6,11 +6,19 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 17:55:56 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/26 17:57:41 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/16 13:11:26 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+
+void	reset_image(t_data *data)
+{
+	mlx_destroy_image(MLX, IMG);
+	IMG = mlx_new_image(MLX, WIN_WIDTH, WIN_HEIGHT);
+	IMG_STR = mlx_get_data_addr(IMG, &BPP, &S_L, &ENDIAN);
+	BPP /= 8;
+}
 
 void	get_value1(t_data *data)
 {

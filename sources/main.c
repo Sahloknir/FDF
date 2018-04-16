@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 11:17:11 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/16 13:14:04 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,10 @@ t_data	*global_init(char **argv, int fd, int argc)
 	gen_colors(data);
 	size_map(data);
 	MLX = mlx_init();
-	WIN = mlx_new_window(MLX, WIN_WIDTH, WIN_HEIGHT, argv[1]);
+	WIN = mlx_new_window(MLX, WIN_WIDTH, WIN_HEIGHT, "FDF");
 	IMG = mlx_new_image(MLX, IMG_W, IMG_H);
 	IMG_STR = mlx_get_data_addr(IMG, &BPP, &S_L, &ENDIAN);
 	BPP = BPP / 8;
-	gen_map(data);
 	return (data);
 }
 
@@ -89,6 +88,7 @@ int		main(int argc, char **argv)
 	if (fd < 3 && fd != 0)
 		ft_error(3);
 	data = global_init(argv, fd, argc);
+	gen_map(data);
 	mlx_key_hook(WIN, redirect_key, data);
 	mlx_expose_hook(WIN, refresh_expose, data);
 	mlx_loop(MLX);

@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 18:35:47 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/16 13:10:01 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct		s_data
 	int				controls;
 }					t_data;
 
-void	draw_line(int x1, int y1, int x2, int y2, t_data *data);
+void	draw_line(t_dot p1, t_dot p2, t_data *data);
 void	read_dots(int fd, t_data *data, int i);
 int		**split_to_int(char **map, int x, int y);
 void	ft_error(int error);
@@ -109,5 +109,6 @@ void	move_img(int key, t_data *data);
 int		refresh_expose(t_data *data);
 void	edit_coef(int key, t_data *data);
 void	rotate(int key, t_data *data);
+void	reset_image(t_data *data);
 
 #endif

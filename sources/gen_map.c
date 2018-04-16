@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 15:14:21 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 10:32:57 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/16 12:36:39 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,24 @@
 
 void	pick_line(t_data *data, t_dot d, int xo, int yo)
 {
+	t_dot	p1;
+	t_dot	p2;
+
+	p1.x = xo + (d.x * GAP_X);
+	p1.y = (yo + (d.x * GAP_Y)) - (data->dots[d.y][d.x] * COEF);
 	if (d.y != 0)
 	{
+		p2.x = (xo + GAP_Y) + (d.x * GAP_X);
+		p2.y = (yo - GAP_X) + (d.x * GAP_Y) - (data->dots[d.y - 1][d.x] * COEF);
 		color_set(data, data->dots[d.y][d.x], data->dots[d.y - 1][d.x]);
-		draw_line(xo + (d.x * GAP_X), yo + (d.x * GAP_Y)
-		- (data->dots[d.y][d.x] * COEF), (xo + GAP_Y) + (d.x * GAP_X),
-		(yo - GAP_X) + (d.x * GAP_Y) - (data->dots[d.y - 1][d.x] * COEF), data);
+		draw_line(p1, p2, data);
 	}
 	if (d.x + 1 != data->size_x)
 	{
+		p2.x = xo + ((d.x + 1) * GAP_X);
+		p2.y = yo + ((d.x + 1) * GAP_Y) - (data->dots[d.y][d.x + 1] * COEF);
 		color_set(data, data->dots[d.y][d.x], data->dots[d.y][d.x + 1]);
-		draw_line(xo + (d.x * GAP_X), yo + (d.x * GAP_Y)
-		- (data->dots[d.y][d.x] * COEF), xo + ((d.x + 1) * GAP_X), yo
-		+ ((d.x + 1) * GAP_Y) - (data->dots[d.y][d.x + 1] * COEF), data);
+		draw_line(p1, p2, data);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 00:59:30 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 12:12:53 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/16 13:11:00 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,15 @@ int		ft_isnum(char *str)
 void	move_img(int key, t_data *data)
 {
 	if (key == 124)
-		IMG_X -= 10;
+		XO -= 10;
 	else if (key == 123)
-		IMG_X += 10;
+		XO += 10;
 	else if (key == 126)
-		IMG_Y += 10;
+		YO += 10;
 	else if (key == 125)
-		IMG_Y -= 10;
+		YO -= 10;
+	reset_image(data);
+	gen_map(data);
 	refresh_expose(data);
 }
 

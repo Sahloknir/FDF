@@ -6,41 +6,39 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 12:44:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 10:20:23 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/16 12:59:11 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	large_angle(int x1, int y1, int x2, int y2, t_data *data)
+void	large_angle(t_dot p1, t_dot p2, t_data *data)
 {
 	float	ratio;
 	float	ratio_scale;
 	int		current_x;
 	int		current_y;
 	int		growth;
-
 	float	t1;
 	float	t2;
 	int		cgrowth;
 	int		abs;
 	int		test;
 
-	growth = y2 < y1 ? -1 : 1;
-	ratio = y1 > y2 ? (float)(y1 - y2)/(x2 - x1) : (float)(y2 - y1)/(x2 - x1);
+	growth = p2.y < p1.y ? -1 : 1;
+	ratio = p1.y > p2.y ? (float)(p1.y - p2.y)/(p2.x - p1.x) :
+	(float)(p2.y - p1.y)/(p2.x - p1.x);
 	ratio_scale = 1;
-	current_x = x1;
-	current_y = y1;
-
+	current_x = p1.x;
+	current_y = p1.y;
 	t1 = 1;
 	test = 1;
-	abs = y2 - y1;
+	abs = p2.y - p1.y;
 	if (abs < 0)
 		abs *= -1;
 	t2 = abs / data->c_y2;
 	cgrowth = data->cgrowth;
-
-	while (current_y != y2)
+	while (current_y != p2.y)
 	{
 		if (ratio_scale >= ratio)
 		{
@@ -60,31 +58,29 @@ void	large_angle(int x1, int y1, int x2, int y2, t_data *data)
 	}
 }
 
-void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
+void	sharp_angle(t_dot p1, t_dot p2, t_data *data)
 {
 	float	ratio;
 	float	ratio_scale;
 	int		current_x;
 	int		current_y;
 	int		growth;
-
 	float	t1;
 	float	t2;
 	int		cgrowth;
 	int		test;
 
-	growth = y2 < y1 ? -1 : 1;
-	ratio = y1 > y2 ? (float)(x2 - x1)/(y1 - y2) : (float)(x2 - x1)/(y2 - y1);
+	growth = p2.y < p1.y ? -1 : 1;
+	ratio = p1.y > p2.y ? (float)(p2.x - p1.x)/(p1.y - p2.y) :
+	(float)(p2.x - p1.x)/(p2.y - p1.y);
 	ratio_scale = 1;
-	current_x = x1;
-	current_y = y1;
-
+	current_x = p1.x;
+	current_y = p1.y;
 	t1 = 1;
 	test = 1;
-	t2 = (x2 - x1) / data->c_y2;
+	t2 = (p2.x - p1.x) / data->c_y2;
 	cgrowth = data->cgrowth;
-
-	while (current_x != x2)
+	while (current_x != p2.x)
 	{
 		if (ratio_scale >= ratio)
 		{
@@ -104,29 +100,22 @@ void	sharp_angle(int x1, int y1, int x2, int y2, t_data *data)
 	}
 }
 
-void	vertical_line(int x1, int y1, int x2, int y2, t_data *data)
+void	vertical_line(t_dot p1, t_dot p2, t_data *data)
 {
 	int		current_y;
 	int		cgrowth;
-	int		growth;
 	int		cpt;
 	int		t1;
 	int		t2;
 
-	x2 = 0;
-	growth = 1;
-	cgrowth = data->cgrowth;
 	cpt = 1;
-	if (y2 < y1)
-	{
-		t1 = y2;
-		y2 = y1;
-		y1 = t1;
-	}
+	cgrowth = data->cgrowth;
+	if (p2.y < p1.y)
+		ft_swap(&p2.y, &p1.y);
 	t1 = 1;
-	t2 = (y2 - y1) / data->c_y2;
-	current_y = y1;
-	while (current_y != y2)
+	t2 = (p2.y - p1.y) / data->c_y2;
+	current_y = p1.y;
+	while (current_y != p2.y)
 	{
 		if (t1 >= t2 && cpt < data->c_y2)
 		{
@@ -134,13 +123,13 @@ void	vertical_line(int x1, int y1, int x2, int y2, t_data *data)
 			cpt++;
 			data->c_y1+= cgrowth;
 		}
-		put_pixel_to_image(x1, current_y, data, data->colors[data->c_y1]);
-		current_y += growth;
+		put_pixel_to_image(p1.x, current_y, data, data->colors[data->c_y1]);
+		current_y += 1;
 		t1++;
 	}
 }
 
-void	horizontal_line(int x1, int y1, int x2, int y2, t_data *data)
+void	horizontal_line(t_dot p1, t_dot p2, t_data *data)
 {
 	int		current_x;
 	int		cpt;
@@ -148,13 +137,12 @@ void	horizontal_line(int x1, int y1, int x2, int y2, t_data *data)
 	int		t2;
 	int		cgrowth;
 
-	y2 = 0;
 	cpt = 1;
 	t1 = 1;
-	t2 = (x2 - x1) / data->c_y2;
+	t2 = (p2.x - p1.x) / data->c_y2;
 	cgrowth = data->cgrowth;
-	current_x = x1;
-	while (current_x != x2)
+	current_x = p1.x;
+	while (current_x != p2.x)
 	{
 		if (t1 >= t2 && cpt < data->c_y2)
 		{
@@ -162,35 +150,35 @@ void	horizontal_line(int x1, int y1, int x2, int y2, t_data *data)
 			t1 -= t2;
 			data->c_y1 += cgrowth;
 		}
-		put_pixel_to_image(current_x, y1, data, data->colors[data->c_y1]);
+		put_pixel_to_image(current_x, p1.y, data, data->colors[data->c_y1]);
 		current_x++;
 		t1++;
 	}
 }
 
-void	draw_line(int x1, int y1, int x2, int y2, t_data *data)
+void	draw_line(t_dot p1, t_dot p2, t_data *data)
 {
-	if (x1 > x2)
+	if (p1.x > p2.x)
 	{
-		ft_swap(&x1, &x2);
-		ft_swap(&y1, &y1);
+		ft_swap(&p1.x, &p2.x);
+		ft_swap(&p1.y, &p2.y);
 	}
-	if (x1 == x2)
-		vertical_line(x1, y1, x2, y2, data);
-	else if (y1 == y2)
-		horizontal_line(x1, y1, x2, y2, data);
-	else if (y2 > y1)
+	if (p1.x == p2.x)
+		vertical_line(p1, p2, data);
+	else if (p1.y == p2.y)
+		horizontal_line(p1, p2, data);
+	else if (p2.y > p1.y)
 	{
-		if ((y2 - y1) > (x2 - x1))
-			large_angle(x1, y1, x2, y2, data);
+		if ((p2.y - p1.y) > (p2.x - p1.x))
+			large_angle(p1, p2, data);
 		else
-			sharp_angle(x1, y1, x2, y2, data);
+			sharp_angle(p1, p2, data);
 	}
-	else if (y2 < y1)
+	else if (p2.y < p1.y)
 	{
-		if ((y1 - y2) > (x2 - x1))
-			large_angle(x1, y1, x2, y2, data);
+		if ((p1.y - p2.y) > (p2.x - p1.x))
+			large_angle(p1, p2, data);
 		else
-			sharp_angle(x1, y1, x2, y2, data);
+			sharp_angle(p1, p2, data);
 	}
 }
