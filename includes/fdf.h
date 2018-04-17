@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/16 13:10:01 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/17 14:52:38 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@
 # define IMG_Y data->img_y
 # define IMG_W data->img_w
 # define IMG_H data->img_h
-
 # define XO data->x0
 # define YO data->y0
 # define GAP_Y data->gap_y
 # define GAP_X data->gap_x
 # define COEF data->coef
 # define COEF_GAP data->coef_gap
+# define ZOOM data->zoom
 
 typedef struct		s_dot
 {
@@ -92,6 +92,7 @@ typedef struct		s_data
 	int				cgrowth;
 	int				nocolor;
 	int				controls;
+	int				zoom;
 }					t_data;
 
 void	draw_line(t_dot p1, t_dot p2, t_data *data);
@@ -110,5 +111,7 @@ int		refresh_expose(t_data *data);
 void	edit_coef(int key, t_data *data);
 void	rotate(int key, t_data *data);
 void	reset_image(t_data *data);
+int		key_press(int key, t_data *data);
+int		close_window(t_data *data);
 
 #endif

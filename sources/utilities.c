@@ -6,11 +6,18 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 17:55:56 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/16 13:11:26 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/17 14:27:36 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+
+int		close_window(t_data *data)
+{
+	mlx_destroy_window(MLX, WIN);
+	exit(0);
+	return (0);
+}
 
 void	reset_image(t_data *data)
 {

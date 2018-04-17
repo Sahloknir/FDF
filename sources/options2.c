@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 12:11:58 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 12:12:36 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/17 14:55:40 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,26 +85,25 @@ void	refresh_map_pos(int key, t_data *data)
 
 void	rotate(int key, t_data *data)
 {
-	if (key == 12)
+	if (key == 12 && ZOOM < 5)
 	{
 		GAP_X *= 2;
+		GAP_Y *= 2;
 		COEF *= 2;
+		ZOOM++;
 	}
-	else if (key == 14 && GAP_X > 5)
+	else if (key == 14 && GAP_X >= 2 && GAP_Y >= 2)
 	{
 		GAP_X /= 2;
+		GAP_Y /= 2;
 		COEF /= 2;
+		ZOOM--;
 	}
-	GAP_Y = GAP_X / 5;
-	if (GAP_Y == 0)
-		GAP_Y = 1;
-	mlx_destroy_image(MLX, IMG);
-	refresh_map_pos(key, data);
-	IMG_W = (GAP_X * data->size_x) + (GAP_Y * data->size_y) + 30;
-	IMG_H = (GAP_X * data->size_y) + (GAP_Y * data->size_x) + 50;
-	IMG = mlx_new_image(MLX, IMG_W, IMG_H);
-	IMG_STR = mlx_get_data_addr(IMG, &BPP, &S_L, &ENDIAN);
-	BPP /= 8;
+	else if (key == 12)
+		ft_putstr("Cannot zoom in more\n");
+	else if (key == 14)
+		ft_putstr("Cannot zoom out more\n");
+	reset_image(data);
 	gen_map(data);
 	refresh_expose(data);
 }

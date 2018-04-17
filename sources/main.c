@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/16 13:14:04 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/17 14:53:57 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,23 @@ int		refresh_expose(t_data *data)
 	return (0);
 }
 
+int		key_press(int key, t_data *data)
+{
+	if (key <= 126 && key >= 123)
+		move_img(key, data);
+	else if (key == 24 || key == 27 || key == 30 || key == 33)
+		edit_coef(key, data);
+	return (key);
+}
+
 int		redirect_key(int key, t_data *data)
 {
 	if (key == 53)
 		exit(0);
-	else if (key >= 123 && key <= 126)
-		move_img(key, data);
 	else if (key == 8)
 		show_controls(data, 0);
-	else if (key == 24 || key == 27 || key == 30 || key == 33)
-		edit_coef(key, data);
 	else if (key == 12 || key == 14)
 		rotate(key, data);
-	ft_putnbr(key);
 	return (0);
 }
 
@@ -65,6 +69,7 @@ t_data	*global_init(char **argv, int fd, int argc)
 	WIN_HEIGHT = 0;
 	IMG_X = 0;
 	IMG_Y = 0;
+	ZOOM = 0;
 	read_dots(fd, data, 0);
 	get_options(data, argv, argc);
 	gen_colors(data);
@@ -90,6 +95,8 @@ int		main(int argc, char **argv)
 	data = global_init(argv, fd, argc);
 	gen_map(data);
 	mlx_key_hook(WIN, redirect_key, data);
+	mlx_hook(WIN, 2, 1L << 0, key_press, data);
+	mlx_hook(WIN, 17, 1L << 17, close_window, data);
 	mlx_expose_hook(WIN, refresh_expose, data);
 	mlx_loop(MLX);
 	return (0);
