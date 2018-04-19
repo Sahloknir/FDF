@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/17 14:53:57 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/19 17:00:54 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	ft_error(int error)
 		ft_putstr("invalid option\n");
 	if (error == 3)
 		ft_putstr("cannot find this file\n");
+	if (error == 4)
+		ft_putstr("could not allocate memory\n");
 	exit(1);
 }
 
@@ -63,7 +65,7 @@ t_data	*global_init(char **argv, int fd, int argc)
 	data->coef = 1;
 	data->coef_gap = 1;
 	data->nocolor = 0;
-	data->controls = -1;
+	data->controls = 1;
 	data->gap_x = 0;
 	WIN_WIDTH = 0;
 	WIN_HEIGHT = 0;

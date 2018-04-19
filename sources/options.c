@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 00:59:30 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/16 13:11:00 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/19 17:03:44 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ void	get_options(t_data *data, char **input, int argc)
 			data->nocolor = 1;
 		else if (ft_strncmp(input[i], "-coef", 5) == 0)
 			get_coef(input[i] + 5, data);
-		else if (ft_strncmp(input[i], "-size", 5) == 0)
-			data->gap_x = ft_atoi(input[i] + 5);
 		else
 			ft_error(2);
 		i++;

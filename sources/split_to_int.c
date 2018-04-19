@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:45:22 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 12:07:37 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/19 16:50:34 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		**split_to_int(char **map, int x, int y)
 
 	i = 0;
 	if (!(tab = malloc_tab(x, y)))
-		ft_error(3);
+		ft_error(4);
 	i = 0;
 	while (i < y)
 	{

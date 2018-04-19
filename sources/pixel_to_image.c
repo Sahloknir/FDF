@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 00:52:25 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/16 13:13:05 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/19 16:33:58 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	put_pixel_to_image(int x, int y, t_data *data, t_color color)
 {
-	if (x >= 0 && x < IMG_W && y >= 0 && y < IMG_H)
+	if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
 	{
 		IMG_STR[(x * BPP) + (y * S_L) + 0] = (char)color.b;
 		IMG_STR[(x * BPP) + (y * S_L) + 1] = (char)color.g;

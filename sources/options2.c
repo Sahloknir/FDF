@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 12:11:58 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/17 14:55:40 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/19 16:54:09 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	get_coef_gap(int key, t_data *data)
 		else
 			ft_putstr("cannot raise more.\n");
 	}
-	printf("Coef_gap is %lf and coef is %lf\n", COEF_GAP, COEF);
+//	printf("Coef_gap is %lf and coef is %lf\n", COEF_GAP, COEF);
 }
 
 void	edit_coef(int key, t_data *data)

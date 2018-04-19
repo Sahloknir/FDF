@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 13:05:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/27 11:45:15 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/19 16:50:25 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ void	read_dots(int fd, t_data *data, int i)
 	size_y = 0;
 	i = 0;
 	if (!(map = (char **)malloc(sizeof(char *) * 2048)))
-		ft_error(3);
+		ft_error(4);
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		map[i++] = line;
 		size_y++;
+		if (size_y == 2048)
+			ft_error(4);
 	}
 	if (size_y == 0)
 		ft_error(1);
@@ -83,6 +85,5 @@ void	read_dots(int fd, t_data *data, int i)
 		ft_error(1);
 	data->size_y = size_y;
 	data->size_x = size_x;
-	data->dots = NULL;
 	data->dots = split_to_int(map, size_x, size_y);
 }
