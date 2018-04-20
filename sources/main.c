@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/20 15:02:26 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 15:40:07 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,34 +56,6 @@ void	ft_error(int error)
 	if (error == 4)
 		ft_putstr("could not allocate memory\n");
 	exit(1);
-}
-
-t_data	*global_init(char **argv, int fd, int argc)
-{
-	t_data	*data;
-
-	if (!(data = (t_data *)malloc(sizeof(t_data))))
-		return (NULL);
-	data->coef = 1;
-	data->coef_gap = 1;
-	data->nocolor = 0;
-	data->controls = 1;
-	data->gap_x = 0;
-	WIN_WIDTH = 0;
-	WIN_HEIGHT = 0;
-	IMG_X = 0;
-	IMG_Y = 0;
-	ZOOM = 0;
-	read_dots(fd, data, 0);
-	get_options(data, argv, argc);
-	gen_colors(data);
-	size_map(data);
-	MLX = mlx_init();
-	WIN = mlx_new_window(MLX, WIN_WIDTH, WIN_HEIGHT, "FDF");
-	IMG = mlx_new_image(MLX, IMG_W, IMG_H);
-	IMG_STR = mlx_get_data_addr(IMG, &BPP, &S_L, &ENDIAN);
-	BPP = BPP / 8;
-	return (data);
 }
 
 int		main(int argc, char **argv)

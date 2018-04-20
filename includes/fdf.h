@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/20 15:03:21 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 16:23:56 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ typedef struct		s_color
 	int				alpha;
 }					t_color;
 
+typedef struct		s_util
+{
+	float			ratio;
+	float			ratio_s;
+	int				c_x;
+	int				c_y;
+	int				growth;
+	float			c_ratio;
+	float			c_ratio_s;
+	int				color_index;
+}					t_util;
+
 typedef struct		s_data
 {
 	void			*mlx_ptr;
@@ -97,24 +109,27 @@ typedef struct		s_data
 	int				ini_y;
 }					t_data;
 
-void	draw_line(t_dot p1, t_dot p2, t_data *data);
-void	read_dots(int fd, t_data *data, int i);
-int		**split_to_int(char **map, int x, int y);
-void	ft_error(int error);
-void	gen_map(t_data *data);
-void	size_map(t_data *data);
-void	gen_colors(t_data *data);
-void	color_set(t_data *data, int c_y1, int c_y2);
-void	get_options(t_data *data, char **input, int argc);
-void	put_pixel_to_image(int x, int y, t_data *data, t_color color);
-void	show_controls(t_data *data, int mode);
-void	move_img(int key, t_data *data);
-int		refresh_expose(t_data *data);
-void	edit_coef(int key, t_data *data);
-void	rotate(int key, t_data *data);
-void	reset_image(t_data *data);
-int		key_press(int key, t_data *data);
-int		close_window(t_data *data);
-void	reset_pos(t_data *data);
+t_data				*global_init(char **argv, int fd, int argc);
+void				draw_line(t_dot p1, t_dot p2, t_data *data);
+void				read_dots(int fd, t_data *data, int i);
+int					**split_to_int(char **map, int x, int y);
+void				ft_error(int error);
+void				gen_map(t_data *data);
+void				size_map(t_data *data);
+void				gen_colors(t_data *data);
+void				color_set(t_data *data, int c_y1, int c_y2);
+void				get_options(t_data *data, char **input, int argc);
+void				put_pixel_to_image(int x, int y, t_data *data, t_color c);
+void				show_controls(t_data *data, int mode);
+void				move_img(int key, t_data *data);
+int					refresh_expose(t_data *data);
+void				edit_coef(int key, t_data *data);
+void				rotate(int key, t_data *data);
+void				reset_image(t_data *data);
+int					key_press(int key, t_data *data);
+int					close_window(t_data *data);
+t_util				init_util(t_dot p1, t_dot p2, int mode);
+int					ft_abs(int nb);
+void				reset_pos(t_data *data);
 
 #endif

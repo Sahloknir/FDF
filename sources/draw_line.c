@@ -6,97 +6,55 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 12:44:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/16 12:59:11 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 16:22:44 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	large_angle(t_dot p1, t_dot p2, t_data *data)
+void	large_angle(t_dot p1, t_dot p2, t_data *data, t_util u)
 {
-	float	ratio;
-	float	ratio_scale;
-	int		current_x;
-	int		current_y;
-	int		growth;
-	float	t1;
-	float	t2;
-	int		cgrowth;
-	int		abs;
-	int		test;
-
-	growth = p2.y < p1.y ? -1 : 1;
-	ratio = p1.y > p2.y ? (float)(p1.y - p2.y)/(p2.x - p1.x) :
-	(float)(p2.y - p1.y)/(p2.x - p1.x);
-	ratio_scale = 1;
-	current_x = p1.x;
-	current_y = p1.y;
-	t1 = 1;
-	test = 1;
-	abs = p2.y - p1.y;
-	if (abs < 0)
-		abs *= -1;
-	t2 = abs / data->c_y2;
-	cgrowth = data->cgrowth;
-	while (current_y != p2.y)
+	u.c_ratio = ft_abs(p2.y - p1.y) / data->c_y2;
+	while (u.c_y != p2.y)
 	{
-		if (ratio_scale >= ratio)
+		if (u.ratio_s >= u.ratio)
 		{
-			current_x++;
-			ratio_scale -= ratio;
+			u.c_x++;
+			u.ratio_s -= u.ratio;
 		}
-		if (t1 >= t2 && test < data->c_y2)
+		if (u.c_ratio_s >= u.c_ratio && u.color_index < data->c_y2)
 		{
-			t1 -= t2;
-			data->c_y1 += cgrowth;
-			test++;
+			u.c_ratio_s -= u.c_ratio;
+			data->c_y1 += data->cgrowth;
+			u.color_index++;
 		}
-		put_pixel_to_image(current_x, current_y, data, data->colors[data->c_y1]);
-		ratio_scale += 1;
-		current_y += growth;
-		t1++;
+		put_pixel_to_image(u.c_x, u.c_y, data, data->colors[data->c_y1]);
+		u.ratio_s += 1;
+		u.c_ratio_s += 1;
+		u.c_y += u.growth;
 	}
 }
 
-void	sharp_angle(t_dot p1, t_dot p2, t_data *data)
+void	sharp_angle(t_dot p1, t_dot p2, t_data *data, t_util u)
 {
-	float	ratio;
-	float	ratio_scale;
-	int		current_x;
-	int		current_y;
-	int		growth;
-	float	t1;
-	float	t2;
-	int		cgrowth;
-	int		test;
-
-	growth = p2.y < p1.y ? -1 : 1;
-	ratio = p1.y > p2.y ? (float)(p2.x - p1.x)/(p1.y - p2.y) :
-	(float)(p2.x - p1.x)/(p2.y - p1.y);
-	ratio_scale = 1;
-	current_x = p1.x;
-	current_y = p1.y;
-	t1 = 1;
-	test = 1;
-	t2 = (p2.x - p1.x) / data->c_y2;
-	cgrowth = data->cgrowth;
-	while (current_x != p2.x)
+	u.c_ratio = (p2.x - p1.x) / data->c_y2;
+	while (u.c_x != p2.x)
 	{
-		if (ratio_scale >= ratio)
+		if (u.ratio_s >= u.ratio)
 		{
-			current_y += growth;
-			ratio_scale -= ratio;
+			u.c_y += u.growth;
+			u.ratio_s -= u.ratio;
 		}
-		if (t1 >= t2 && test < data->c_y2)
+		if (u.c_ratio_s >= u.c_ratio && u.color_index < data->c_y2)
 		{
-			t1 -= t2;
-			test++;
-			data->c_y1 += cgrowth;
+			u.c_ratio_s -= u.c_ratio;
+			u.color_index++;
+			data->c_y1 += data->cgrowth;
 		}
-		put_pixel_to_image(current_x, current_y, data, data->colors[data->c_y1]);
-		ratio_scale += 1;
-		current_x++;
-		t1++;
+		put_pixel_to_image(u.c_x, u.c_y, data, data->colors[data->c_y1]);
+		u.ratio_s += 1;
+		u.c_ratio_s += 1;
+		u.c_x++;
 	}
 }
 
@@ -121,7 +79,7 @@ void	vertical_line(t_dot p1, t_dot p2, t_data *data)
 		{
 			t1 -= t2;
 			cpt++;
-			data->c_y1+= cgrowth;
+			data->c_y1 += cgrowth;
 		}
 		put_pixel_to_image(p1.x, current_y, data, data->colors[data->c_y1]);
 		current_y += 1;
@@ -170,15 +128,15 @@ void	draw_line(t_dot p1, t_dot p2, t_data *data)
 	else if (p2.y > p1.y)
 	{
 		if ((p2.y - p1.y) > (p2.x - p1.x))
-			large_angle(p1, p2, data);
+			large_angle(p1, p2, data, init_util(p1, p2, 1));
 		else
-			sharp_angle(p1, p2, data);
+			sharp_angle(p1, p2, data, init_util(p1, p2, 2));
 	}
 	else if (p2.y < p1.y)
 	{
 		if ((p1.y - p2.y) > (p2.x - p1.x))
-			large_angle(p1, p2, data);
+			large_angle(p1, p2, data, init_util(p1, p2, 1));
 		else
-			sharp_angle(p1, p2, data);
+			sharp_angle(p1, p2, data, init_util(p1, p2, 2));
 	}
 }

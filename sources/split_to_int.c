@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:45:22 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/20 15:03:51 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 15:37:43 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,48 +46,42 @@ char	*fill_int_tab(int *nb, char *s)
 	return (s);
 }
 
-char	*skip_hex(char *s)
+void	fill_tab(int **tab, t_dot *d, char **s, int *levier)
 {
-	while (*s != ' ' && *s != '\0')
-		s++;
-	return (s);
+	if (*levier == 0)
+	{
+		tab[d->y][d->x] = ft_atoi(*s);
+		d->x++;
+		*levier = 1;
+	}
+	(*s)++;
 }
 
 int		**split_to_int(char **map, int x, int y)
 {
-	int		i;
-	int		j;
+	t_dot	d;
 	int		**tab;
 	char	*s;
 	int		levier;
 
-	i = 0;
+	d.y = 0;
 	if (!(tab = malloc_tab(x, y)))
 		ft_error(4);
-	i = 0;
-	while (i < y)
+	while (d.y < y)
 	{
-		s = map[i];
-		j = 0;
+		s = map[d.y];
+		d.x = 0;
 		while (*s != '\0')
 		{
 			levier = 0;
 			while ((*s >= '0' && *s <= '9') || *s == '-')
-			{
-				if (levier == 0)
-				{
-					tab[i][j] = ft_atoi(s);
-					j++;
-					levier = 1;
-				}
-				s++;
-			}
+				fill_tab(tab, &d, &s, &levier);
 			if (*s == ',')
 				s += 9;
 			while ((*s > '9' || *s < '0') && *s != '\0' && *s != '-')
 				s++;
 		}
-		i++;
+		d.y++;
 	}
 	return (tab);
 }
