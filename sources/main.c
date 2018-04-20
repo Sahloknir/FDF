@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:40:19 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/19 17:00:54 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 15:02:26 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int		redirect_key(int key, t_data *data)
 		show_controls(data, 0);
 	else if (key == 12 || key == 14)
 		rotate(key, data);
+	else if (key == 15)
+		reset_pos(data);
 	return (0);
 }
 

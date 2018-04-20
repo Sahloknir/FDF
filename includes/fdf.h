@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/17 14:52:38 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 15:03:21 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ typedef struct		s_data
 	int				nocolor;
 	int				controls;
 	int				zoom;
+	int				ini_x;
+	int				ini_y;
 }					t_data;
 
 void	draw_line(t_dot p1, t_dot p2, t_data *data);
@@ -113,5 +115,6 @@ void	rotate(int key, t_data *data);
 void	reset_image(t_data *data);
 int		key_press(int key, t_data *data);
 int		close_window(t_data *data);
+void	reset_pos(t_data *data);
 
 #endif

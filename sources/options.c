@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 00:59:30 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/19 17:03:44 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 15:10:46 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	show_controls(t_data *data, int mode)
 		"Use '+' and '-' to change the map height");
 		mlx_string_put(MLX, WIN, 5, 61, 0xBBBBBB,
 		"change the calibration with '[' and ']'");
+		mlx_string_put(MLX, WIN, 5, 81, 0xBBBBBB,
+		"Press 'r' to reset your position");
 	}
 }
 

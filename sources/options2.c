@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 12:11:58 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/19 16:54:09 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 15:11:50 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	get_coef_gap(int key, t_data *data)
 		else
 			ft_putstr("cannot raise more.\n");
 	}
-//	printf("Coef_gap is %lf and coef is %lf\n", COEF_GAP, COEF);
 }
 
 void	edit_coef(int key, t_data *data)
@@ -103,6 +102,15 @@ void	rotate(int key, t_data *data)
 		ft_putstr("Cannot zoom in more\n");
 	else if (key == 14)
 		ft_putstr("Cannot zoom out more\n");
+	reset_image(data);
+	gen_map(data);
+	refresh_expose(data);
+}
+
+void	reset_pos(t_data *data)
+{
+	XO = 50;
+	YO = 30;
 	reset_image(data);
 	gen_map(data);
 	refresh_expose(data);

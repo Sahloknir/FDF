@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 15:14:21 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/19 16:49:37 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/20 15:05:37 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,10 @@ void	gen_map(t_data *data)
 	}
 }
 
-void	adapt_coef(t_data *data)
+void	set_ini(t_data *data)
 {
-	int		max_alt;
-	int		min_alt;
-
-	max_alt = (YO + (data->max_y * GAP_X)) + (data->max_x * GAP_Y)
-	- (data->max_val * COEF);
-	min_alt = (YO + (data->min_y * GAP_X)) + (data->min_x * GAP_Y)
-	- (data->dots[data->min_y][data->min_x] * COEF);
-	while (max_alt < 0 || min_alt > IMG_H)
-	{
-		COEF -= COEF > 1 ? 1 : 0.1;
-		max_alt = (YO + (data->max_y * GAP_X)) + (data->max_x * GAP_Y)
-		- (data->dots[data->max_y][data->max_x] * COEF);
-		min_alt = (YO + (data->min_y * GAP_X)) + (data->min_x * GAP_Y)
-		- (data->dots[data->min_y][data->min_x] * COEF);
-	}
+	data->ini_x = XO;
+	data->ini_y = YO;
 }
 
 void	size_map(t_data *data)
@@ -101,6 +88,7 @@ void	size_map(t_data *data)
 	}
 	data->x0 = data->size_y * data->gap_y + 30;
 	data->y0 = 50;
+	set_ini(data);
 	IMG_W = WIN_WIDTH;
 	IMG_H = WIN_HEIGHT;
 }
