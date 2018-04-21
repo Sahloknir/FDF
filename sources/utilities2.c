@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:51:38 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/20 16:22:32 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/21 16:25:10 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,34 @@ t_util		init_util(t_dot p1, t_dot p2, int mode)
 	u.c_ratio_s = 1;
 	u.color_index = 1;
 	return (u);
+}
+
+void		win_size_error(void)
+{
+	ft_putstr("size must be between 100 and 2000 and separated by ':'\n");
+	ft_error(2);
+}
+
+void		get_win_size(t_data *data, char *input)
+{
+	int		i;
+	int		nb;
+
+	i = 0;
+	nb = ft_atoi(input + 5);
+	if (nb < 100 || nb > 2000)
+		win_size_error();
+	WIN_WIDTH = nb;
+	while (input[i] != '\0' && input[i] != ':')
+		i++;
+	if (input[i] != ':')
+		win_size_error();
+	else
+	{
+		nb = ft_atoi(input + i + 1);
+		if (nb < 100 || nb > 2000)
+			win_size_error();
+		else
+			WIN_HEIGHT = nb;
+	}
 }

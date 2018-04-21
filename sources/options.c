@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 00:59:30 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/20 15:10:46 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/21 16:24:25 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	show_controls(t_data *data, int mode)
 		"change the calibration with '[' and ']'");
 		mlx_string_put(MLX, WIN, 5, 81, 0xBBBBBB,
 		"Press 'r' to reset your position");
+		mlx_string_put(MLX, WIN, 5, 101, 0xBBBBBB,
+		"Use 'q' and 'e' to zoom in/out");
 	}
 }
 
@@ -101,6 +103,8 @@ void	get_options(t_data *data, char **input, int argc)
 			data->nocolor = 1;
 		else if (ft_strncmp(input[i], "-coef", 5) == 0)
 			get_coef(input[i] + 5, data);
+		else if (ft_strncmp(input[i], "-size", 5) == 0)
+			get_win_size(data, input[i]);
 		else
 			ft_error(2);
 		i++;

@@ -6,11 +6,11 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:34:03 by axbal             #+#    #+#             */
-/*   Updated: 2018/03/10 18:31:26 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/03 14:17:29 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
 char	*cat_buff(char *save, char *buf)
 {
@@ -47,11 +47,12 @@ int		fill_line(char **save, char **line, int mode)
 	char	*tmp;
 
 	i = 0;
-	while ((*save)[i] != '\n' && (*save)[i] != '\0')
+	while (*save && (*save)[i] != '\n' && (*save)[i] != '\0')
 		i++;
 	if (!(*line = (char *)malloc(sizeof(char) * (i + 1))))
 		return (-1);
-	*line = ft_strncpy(*line, *save, i);
+	if (*save)
+		*line = ft_strncpy(*line, *save, i);
 	(*line)[i] = '\0';
 	if (mode == 1 || mode == 2)
 	{
@@ -60,7 +61,7 @@ int		fill_line(char **save, char **line, int mode)
 		*save = ft_strcpy(*save, tmp);
 		free(tmp);
 	}
-	if (mode == 2 || mode == 3)
+	if (*save && (mode == 2 || mode == 3))
 		ft_bzero(*save, ft_strlen(*save));
 	if (mode == 3)
 		*line = "";
@@ -91,7 +92,7 @@ int		get_next_line(const int fd, char **line)
 		return (-1);
 	else if (stop == 1)
 		return (fill_line(&save, line, 1));
-	else if (ft_strlen(save) > 0)
+	else if (save && ft_strlen(save) > 0)
 		return (fill_line(&save, line, 2));
 	return (fill_line(&save, line, 3));
 }

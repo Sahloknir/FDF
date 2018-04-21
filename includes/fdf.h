@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 16:38:06 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/20 16:23:56 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/21 16:04:24 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,6 @@ int					close_window(t_data *data);
 t_util				init_util(t_dot p1, t_dot p2, int mode);
 int					ft_abs(int nb);
 void				reset_pos(t_data *data);
+void				get_win_size(t_data *data, char *input);
 
 #endif
