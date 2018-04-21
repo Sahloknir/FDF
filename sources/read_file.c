@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 13:05:40 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/19 16:50:25 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/21 20:22:34 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,26 @@ int		check_length(char **map, int size)
 	return (nb);
 }
 
+void	set_dots(t_data *data, int y, int x, char **map)
+{
+	data->size_y = y;
+	data->size_x = x;
+	data->dots = split_to_int(map, x, y);
+}
+
+void	free_map(char **map, int y)
+{
+	int		i;
+
+	i = 0;
+	while (i < y)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
+
 void	read_dots(int fd, t_data *data, int i)
 {
 	int		size_x;
@@ -74,7 +94,8 @@ void	read_dots(int fd, t_data *data, int i)
 		ft_error(4);
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		map[i++] = line;
+		map[i++] = ft_strdup(line);
+		free(line);
 		size_y++;
 		if (size_y == 2048)
 			ft_error(4);
@@ -83,7 +104,6 @@ void	read_dots(int fd, t_data *data, int i)
 		ft_error(1);
 	if ((size_x = check_length(map, i)) == -1)
 		ft_error(1);
-	data->size_y = size_y;
-	data->size_x = size_x;
-	data->dots = split_to_int(map, size_x, size_y);
+	set_dots(data, size_y, size_x, map);
+	free_map(map, size_y);
 }
