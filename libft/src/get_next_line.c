@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:34:03 by axbal             #+#    #+#             */
-/*   Updated: 2018/04/03 14:17:29 by axbal            ###   ########.fr       */
+/*   Updated: 2018/04/24 13:42:12 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ int		fill_line(char **save, char **line, int mode)
 	i = 0;
 	while (*save && (*save)[i] != '\n' && (*save)[i] != '\0')
 		i++;
-	if (!(*line = (char *)malloc(sizeof(char) * (i + 1))))
+	if (mode != 3 && !(*line = (char *)malloc(sizeof(char) * (i + 1))))
 		return (-1);
-	if (*save)
+	if (mode != 3 && *save)
 		*line = ft_strncpy(*line, *save, i);
-	(*line)[i] = '\0';
+	if (mode != 3)
+		(*line)[i] = '\0';
 	if (mode == 1 || mode == 2)
 	{
 		tmp = ft_strdup(*save + i + 1);
@@ -63,8 +64,6 @@ int		fill_line(char **save, char **line, int mode)
 	}
 	if (*save && (mode == 2 || mode == 3))
 		ft_bzero(*save, ft_strlen(*save));
-	if (mode == 3)
-		*line = "";
 	if (mode != 3)
 		return (1);
 	return (0);
